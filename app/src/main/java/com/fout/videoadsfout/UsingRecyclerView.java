@@ -27,6 +27,8 @@ public class UsingRecyclerView extends AppCompatActivity {
     private Unbinder unbinder;
     RecViewAdapter recViewAdapter;
     private RFPInstreamAdPlacer adPlacer;
+    final int FOUT_VIDEO = 0;
+    final int FOUT_NATIVE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class UsingRecyclerView extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recViewAdapter = new RecViewAdapter(getBaseContext(), Newslist, adPlacer);
         recyclerView.setAdapter(recViewAdapter);
-        loadfout();
+        LoadFoutads(FOUT_VIDEO);
     }
 
 
@@ -57,12 +59,23 @@ public class UsingRecyclerView extends AppCompatActivity {
         Newslist.add(new News("Nekat, Turis Spanyol Panjat Padmasana Pura Besakih", "Kamis, 19 April 2018 – 14:09 WIB", "http://photo.jpnn.com/arsip/watermark/2018/04/19/turis-spanyol-bernama-bernat-purel-mundo-yang-memanjat-padmasana-pura-besakih-di-bali-sehingga-menimbulkan-kemarahan-foto-youtube.jpg", " Bali "));
     }
 
-    private void loadfout() {
+    private void LoadFoutads(int ads_type) {
+        //ads type is native (text) and video ads
+        RFP.init(this, "1143");
 
-        RFP.init(this, "1144");
-
+        String adspot_id = null;
+        switch (ads_type) {
+            case FOUT_VIDEO:
+                adspot_id = "NTI1OjI3MTY";
+                break;
+            case FOUT_NATIVE:
+                adspot_id = "MDM5OjMwMzU";
+                break;
+            default:
+                break;
+        }
         // (4) Generation of RFPInstreamAdPlacer
-        adPlacer = RFP.createInstreamAdPlacer(this, "NTI1OjI3MTY");
+        adPlacer = RFP.createInstreamAdPlacer(this, adspot_id);
         // (1) Set listener in RFPInstreamAdAdapter
         adPlacer.setAdListener(new RFPInstreamAdPlacerListener() {
 

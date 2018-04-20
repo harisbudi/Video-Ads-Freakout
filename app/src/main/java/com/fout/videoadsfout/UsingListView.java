@@ -30,6 +30,8 @@ public class UsingListView extends AppCompatActivity {
     private ListViewAdapter listViewAdapter;
     @BindView(R.id.listview)
     ListView listView;
+    final int FOUT_VIDEO = 0;
+    final int FOUT_NATIVE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class UsingListView extends AppCompatActivity {
         initializeData();
         listViewAdapter = new ListViewAdapter(this,Newslist);
         listView.setAdapter(listViewAdapter);
+//        LoadFoutads(FOUT_VIDEO);
     }
 
     private List<Object> Newslist;
@@ -54,13 +57,23 @@ public class UsingListView extends AppCompatActivity {
         Newslist.add(new News("Rossi Pengin Memutus Rekor Marc Marquez di MotoGP Amerika", "Kamis, 19 April 2018 – 14:11 WIB", "http://photo.jpnn.com/timthumb.php?src=https://photo.jpnn.com/arsip/normal/2017/05/07/67097026dc538d73f4cd904c13d5e72f.jpg&w=510&h=294&zc=1&q=70", " Olahraga"));
         Newslist.add(new News("Nekat, Turis Spanyol Panjat Padmasana Pura Besakih", "Kamis, 19 April 2018 – 14:09 WIB", "http://photo.jpnn.com/arsip/watermark/2018/04/19/turis-spanyol-bernama-bernat-purel-mundo-yang-memanjat-padmasana-pura-besakih-di-bali-sehingga-menimbulkan-kemarahan-foto-youtube.jpg", " Bali "));
     }
+    private void LoadFoutads(int ads_type) {
+        //ads type is native (text) and video ads
+        RFP.init(this, "1143");
 
-    private void loadfout() {
-
-        RFP.init(this, "1144");
-
+        String adspot_id = null;
+        switch (ads_type) {
+            case FOUT_VIDEO:
+                adspot_id = "NTI1OjI3MTY";
+                break;
+            case FOUT_NATIVE:
+                adspot_id = "MDM5OjMwMzU";
+                break;
+            default:
+                break;
+        }
         // (4) Generation of RFPInstreamAdPlacer
-        adPlacer = RFP.createInstreamAdPlacer(this, "NTI1OjI3MTY");
+        adPlacer = RFP.createInstreamAdPlacer(this, adspot_id);
 
         // (5)  Allocate advertising case information to any View (see parameter items used for customized infeed advertising, as described below)
         InstreamAdViewBinderImpl adViewBinder = new InstreamAdViewBinderImpl(getApplicationContext()) {
