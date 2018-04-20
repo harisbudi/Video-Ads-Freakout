@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginTop="5dp">
+
+    <ImageView
+        android:id="@+id/image_thumb"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:adjustViewBounds="true"
+        android:background="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tx_uptitle_listitem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:maxLines="1"
+        android:text="judul"
+        android:textColor="#ff0322"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/image_thumb"
+        app:layout_constraintTop_toTopOf="@+id/image_thumb" />
+
+    <TextView
+        android:id="@+id/tx_title_listitem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:text="tittle here"
+        android:textColor="#212121"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/image_thumb"
+        app:layout_constraintTop_toBottomOf="@+id/tx_uptitle_listitem" />
+
+    <TextView
+        android:id="@+id/tx_date_published_listitem"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="date published"
+        android:textColor="#787878"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/image_thumb"
+        app:layout_constraintEnd_toStartOf="@+id/bt_List_bookmark"
+        app:layout_constraintStart_toEndOf="@+id/image_thumb" />
+
+
+
+    <View
+        android:id="@+id/views"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:background="#b1b1b1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/image_thumb"
+        app:layout_constraintTop_toBottomOf="@+id/tx_date_published_listitem" />
+</android.support.constraint.ConstraintLayout>
