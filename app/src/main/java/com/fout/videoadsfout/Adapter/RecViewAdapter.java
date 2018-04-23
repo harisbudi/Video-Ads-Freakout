@@ -26,6 +26,7 @@ public class RecViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private final int ADS_FOUT_VIDEO = 2;
     // (2) Definition of RFPInstreamAdPlacer
     private RFPInstreamAdPlacer adPlacer;
+    private final String TAG = "RecViewAdapter";
 
     public RecViewAdapter(Context context, List<Object> items, RFPInstreamAdPlacer adPlacer) {
         this.adPlacer = adPlacer;
@@ -106,6 +107,34 @@ public class RecViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             return ADS_FOUT_VIDEO;
         }
         return -1;
+    }
+
+    boolean isplay = false;
+    boolean neverplay = true;
+
+    public void VisibiltyTreshold(RecyclerView.ViewHolder viewHolder, float visibility) {
+        if (viewHolder.getItemViewType() == ADS_FOUT_VIDEO) {
+            FoutVideoHolder v = (FoutVideoHolder) viewHolder;
+            if (visibility >= 50) {
+                if (neverplay) {
+                    RFPInstreamInfoModel adsdata = (RFPInstreamInfoModel) items.get(viewHolder.getAdapterPosition());
+                    v.adVideo.processAd(adsdata);
+                    adPlacer.measureImp(adsdata);
+                    neverplay = false;
+                    isplay = true;
+                } else {
+                    if (isplay) {
+
+                    } else {
+                        v.adVideo.play();
+                        isplay = true;
+                    }
+                }
+            } else {
+                v.adVideo.pause();
+                isplay = false;
+            }
+        }
     }
 
     private boolean isAd(int position) {

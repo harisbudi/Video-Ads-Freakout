@@ -12,21 +12,17 @@ import jp.fout.rfp.android.sdk.model.RFPInstreamInfoModel;
 import jp.fout.rfp.android.sdk.video.VideoAdView;
 
 public class FoutVideoHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.custom_instream_advertiser_name)
-    TextView advertiserName;
-    @BindView(R.id.custom_instream_sponsor_name)
-    TextView adSponsoredLabel;
-    @BindView(R.id.custom_instream_video_view)
-    VideoAdView adVideo;
-    @BindView(R.id.custom_instream_ad_text)
-    TextView adText;
-
+    private TextView adSponsoredLabel, advertiserName, adText;
+    public VideoAdView adVideo;
     public View view;
 
     public FoutVideoHolder(View convertView) {
         super(convertView);
         view = convertView;
-        ButterKnife.bind(this, view);
+        advertiserName = convertView.findViewById(R.id.custom_instream_advertiser_name);
+        adSponsoredLabel = convertView.findViewById(R.id.custom_instream_sponsor_name);
+        adVideo = convertView.findViewById(R.id.custom_instream_video_view);
+        adText = convertView.findViewById(R.id.custom_instream_ad_text);
     }
 
     public void setData(RFPInstreamInfoModel adData) {

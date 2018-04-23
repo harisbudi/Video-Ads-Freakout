@@ -1,11 +1,13 @@
 package com.fout.videoadsfout;
 
+import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.fout.videoadsfout.Adapter.RecViewAdapter;
 import com.fout.videoadsfout.Model.News;
@@ -27,8 +29,12 @@ public class UsingRecyclerView extends AppCompatActivity {
     private Unbinder unbinder;
     RecViewAdapter recViewAdapter;
     private RFPInstreamAdPlacer adPlacer;
+
+    private final String TAG = "UsingRecyclerView";
     final int FOUT_VIDEO = 0;
     final int FOUT_NATIVE = 1;
+    LinearLayoutManager linearLayoutManager;
+    private int firstVisibleItem, lastVisibleItem, totalItemCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +42,52 @@ public class UsingRecyclerView extends AppCompatActivity {
         setContentView(R.layout.activity_using_recycler_view);
         initializeData();
         unbinder = ButterKnife.bind(this);
+        LoadFoutads(FOUT_VIDEO);
+        linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recViewAdapter = new RecViewAdapter(getBaseContext(), Newslist, adPlacer);
         recyclerView.setAdapter(recViewAdapter);
-        LoadFoutads(FOUT_VIDEO);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                Rect globalVisibleRect = new Rect();
+                Rect itemVisibleRect = new Rect();
+                recyclerView.getGlobalVisibleRect(globalVisibleRect);
+                firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
+                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
+                totalItemCount = linearLayoutManager.getItemCount();
+
+                for (int i = firstVisibleItem; i <= lastVisibleItem; i++) {
+                    View view = linearLayoutManager.findViewByPosition(i);
+                    if (view != null && view.getHeight() > 0 && view.getGlobalVisibleRect(itemVisibleRect)) {
+                        float visibilityExtent;
+                        if (itemVisibleRect.bottom >= globalVisibleRect.bottom) {
+                            int visibleHeight = globalVisibleRect.bottom - itemVisibleRect.top;
+                            visibilityExtent = Math.min(((float) visibleHeight) / view.getHeight(), 1f) * 100;
+                        } else {
+                            int visibleHeight = itemVisibleRect.bottom - globalVisibleRect.top;
+                            visibilityExtent = Math.min(((float) visibleHeight) / view.getHeight(), 1f) * 100;
+                        }
+                        RecyclerView.ViewHolder v = recyclerView.findViewHolderForAdapterPosition(i);
+                        Log.d(TAG, "onScrolled: " + v);
+
+                        recViewAdapter.VisibiltyTreshold(v, visibilityExtent);
+                    }
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+            }
+        });
+
     }
 
 
@@ -118,6 +164,5 @@ public class UsingRecyclerView extends AppCompatActivity {
             }
         });
         adPlacer.loadAd();
-//        adPlacer.measureImp(adData);
     }
 }
