@@ -24,8 +24,8 @@ public class RecViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private final int HEAD_THUMB = 0;
     private final int TERBARU = 1;
     private final int ADS_FOUT_VIDEO = 2;
-
-    public RFPInstreamAdPlacer adPlacer;
+    // (2) Definition of RFPInstreamAdPlacer
+    private RFPInstreamAdPlacer adPlacer;
 
     public RecViewAdapter(Context context, List<Object> items, RFPInstreamAdPlacer adPlacer) {
         this.adPlacer = adPlacer;
@@ -37,22 +37,20 @@ public class RecViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view;
         RecyclerView.ViewHolder holder;
-//test
+        View view;
         switch (viewType) {
             case HEAD_THUMB:
                 view = inflater.inflate(R.layout.item_list_newsfeed_thumb, parent, false);
                 holder = new NewsFeedHolder(view);
                 break;
-            case TERBARU:
-                view = inflater.inflate(R.layout.item_list_newsfeed, parent, false);
-                holder = new NewsFeedHolder(view);
-                break;
-
             case ADS_FOUT_VIDEO:
                 view = inflater.inflate(R.layout.item_list_freakout, parent, false);
                 holder = new FoutVideoHolder(view);
+                break;
+            case TERBARU:
+                view = inflater.inflate(R.layout.item_list_newsfeed, parent, false);
+                holder = new NewsFeedHolder(view);
                 break;
             default:
                 view = inflater.inflate(R.layout.item_list_newsfeed, parent, false);
