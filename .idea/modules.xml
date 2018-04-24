@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Video-Ads-Freakout.iml" filepath="$PROJECT_DIR$/Video-Ads-Freakout.iml" />
+      <module fileurl="file://$PROJECT_DIR$/VideoAdsFout.iml" filepath="$PROJECT_DIR$/VideoAdsFout.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
