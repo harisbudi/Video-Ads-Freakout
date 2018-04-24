@@ -39,9 +39,9 @@ public class UsingListView extends AppCompatActivity {
         setContentView(R.layout.activity_using_list_view);
         unbinder = ButterKnife.bind(this);
         initializeData();
+        LoadFoutads(FOUT_VIDEO);
         listViewAdapter = new ListViewAdapter(this,Newslist);
         listView.setAdapter(listViewAdapter);
-//        LoadFoutads(FOUT_VIDEO);
     }
 
     private List<Object> Newslist;
@@ -74,27 +74,47 @@ public class UsingListView extends AppCompatActivity {
         }
         // (4) Generation of RFPInstreamAdPlacer
         adPlacer = RFP.createInstreamAdPlacer(this, adspot_id);
+        // (1) Set listener in RFPInstreamAdAdapter
+        adPlacer.setAdListener(new RFPInstreamAdPlacerListener() {
 
-        // (5)  Allocate advertising case information to any View (see parameter items used for customized infeed advertising, as described below)
-        InstreamAdViewBinderImpl adViewBinder = new InstreamAdViewBinderImpl(getApplicationContext()) {
+            // (2) When advertising loading is complete
+            // Acquire the advertising case information to pass placeAd(RFPInstreamInfoModel advsinstreaminfomodel, View view, ViewGroup viewgroup) of the RFPInstreamAdPlacer to be described later
             @Override
-            public View createView(ViewGroup parent, int layoutId) {
-                View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_list_freakout, parent, false);
-                FoutVideoHolder holder = new FoutVideoHolder(view);
-                view.setTag(holder);
-                return view;
+            public void onAdsLoaded(List<? extends RFPInstreamInfoModel> items) {
+                int i = 3;
+                Log.d("fout", "onAdsLoaded: " + items.size());
+                for (RFPInstreamInfoModel adData : items) {
+                    Newslist.add(i, adData);
+                    i += 3;
+                }
+                listViewAdapter.notifyDataSetChanged();
             }
 
+            // (3) When main image loading in advertising View is complete
             @Override
-            public void bindAdData(View v, RFPInstreamInfoModel adData) {
-                FoutVideoHolder holder = (FoutVideoHolder) v.getTag();
-                holder.setData(adData);
-
-//                loadAdImage(adData, holder.view, null);
-//                loadAdIconImage(adData, holder.iconImage, null);
+            public void onAdMainImageLoaded(String imageUrl) {
             }
-        };
-        adPlacer.registerAdViewBinder(adViewBinder);
+
+            // (4) When icon image loading in advertising View is complete
+            @Override
+            public void onAdIconImageLoaded(String imageUrl) {
+            }
+
+            // (5) When advertising loading fails
+            @Override
+            public void onAdsLoadedFail(String errorString) {
+            }
+
+            // (6) When advertising View image loading fails
+            @Override
+            public void onAdImageLoadedFail(String imageUrl, String errorString) {
+            }
+
+            // (7) When clicking advertising View
+            @Override
+            public void onAdClicked(String redirectURL) {
+            }
+        });
+        adPlacer.loadAd();
     }
-
 }
