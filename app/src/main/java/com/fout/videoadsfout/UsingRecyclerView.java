@@ -58,6 +58,7 @@ public class UsingRecyclerView extends AppCompatActivity {
                 Rect globalVisibleRect = new Rect();
                 Rect itemVisibleRect = new Rect();
                 recyclerView.getGlobalVisibleRect(globalVisibleRect);
+
                 firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
                 lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
                 totalItemCount = linearLayoutManager.getItemCount();
@@ -89,7 +90,6 @@ public class UsingRecyclerView extends AppCompatActivity {
         });
 
     }
-
 
     private List<Object> Newslist;
 

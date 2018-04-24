@@ -32,7 +32,6 @@ public class ListViewAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         return items.size();
-
     }
 
     @Override
@@ -81,7 +80,7 @@ public class ListViewAdapter extends BaseAdapter {
         LayoutInflater inflater = LayoutInflater.from(context);
 
         NewsFeedHolder news;
-        FoutVideoHolder fout;
+        final FoutVideoHolder fout;
         switch (getItemViewType(position)) {
             case HEAD_THUMB:
                 view = inflater.inflate(R.layout.item_list_newsfeed_thumb, parent, false);
@@ -98,6 +97,13 @@ public class ListViewAdapter extends BaseAdapter {
                 view = inflater.inflate(R.layout.item_list_freakout, parent, false);
                 fout = new FoutVideoHolder(view);
                 fout.setData((RFPInstreamInfoModel) items.get(position));
+                fout.adVideo.processAd((RFPInstreamInfoModel) items.get(position));
+                fout.view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        fout.adVideo.pause();
+                    }
+                });
                 break;
             default:
                 view = inflater.inflate(R.layout.item_list_newsfeed, parent, false);
@@ -105,7 +111,6 @@ public class ListViewAdapter extends BaseAdapter {
                 news.setdata((News) items.get(position));
                 break;
         }
-
         return view;
     }
 }

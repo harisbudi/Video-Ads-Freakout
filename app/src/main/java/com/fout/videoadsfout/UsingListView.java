@@ -82,6 +82,7 @@ public class UsingListView extends AppCompatActivity {
             @Override
             public void onAdsLoaded(List<? extends RFPInstreamInfoModel> items) {
                 int i = 3;
+
                 Log.d("fout", "onAdsLoaded: " + items.size());
                 for (RFPInstreamInfoModel adData : items) {
                     Newslist.add(i, adData);

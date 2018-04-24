@@ -71,18 +71,14 @@ public class RecViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 n.setdata(feed);
                 break;
             case ADS_FOUT_VIDEO:
-                Log.d("fout", "onBindViewHolder: ");
-                RFPInstreamInfoModel adsdata = (RFPInstreamInfoModel) items.get(position);
-                FoutVideoHolder F = (FoutVideoHolder) holder;
-
-
+                final RFPInstreamInfoModel adsdata = (RFPInstreamInfoModel) items.get(position);
+                final FoutVideoHolder F = (FoutVideoHolder) holder;
                 F.setData(adsdata);
-
                 F.view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-//                        F.adVideo.pause();
-//                        adPlacer.sendClickEvent(adsdata);
+                        F.adVideo.pause();
+                        adPlacer.sendClickEvent(adsdata);
                     }
                 });
                 break;
@@ -118,8 +114,8 @@ public class RecViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             if (visibility >= 50) {
                 if (neverplay) {
                     RFPInstreamInfoModel adsdata = (RFPInstreamInfoModel) items.get(viewHolder.getAdapterPosition());
-                    v.adVideo.processAd(adsdata);
-                    adPlacer.measureImp(adsdata);
+                    v.adVideo.processAd(adsdata); // play a video automatically
+                    adPlacer.measureImp(adsdata); // count impression
                     neverplay = false;
                     isplay = true;
                 } else {

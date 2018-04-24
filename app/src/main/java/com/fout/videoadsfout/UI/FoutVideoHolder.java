@@ -34,4 +34,5 @@ public class FoutVideoHolder extends RecyclerView.ViewHolder {
             adSponsoredLabel.setText(displayedAdvertiser);
         }
     }
+
 }
