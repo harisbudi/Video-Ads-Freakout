@@ -107,7 +107,7 @@ public class UsingRecyclerView extends AppCompatActivity {
 
     private void LoadFoutads(int ads_type) {
         //ads type is native (text) and video ads
-        RFP.init(this, "1143");
+        RFP.init(this, "1144");
 
         String adspot_id = null;
         switch (ads_type) {
